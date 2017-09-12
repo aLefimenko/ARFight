@@ -189,21 +189,12 @@ public class RotatePr : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Converts the rotation from right handed to left handed.
-    /// </summary>
-    /// <returns>
-    /// The result rotation.
-    /// </returns>
-    /// <param name='q'>
-    /// The rotation to convert.
-    /// </param>
     private static Quaternion ConvertRotation(Quaternion q)
     {
         return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
     private static Quaternion ConvertRotation2(Quaternion q) {
-        return new Quaternion(-q.x, -q.y, q.z, q.w);
+        return new Quaternion(q.x, -q.y, q.z, 1f);
     }
 
     /// <summary>

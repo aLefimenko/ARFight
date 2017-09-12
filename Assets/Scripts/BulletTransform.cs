@@ -9,7 +9,6 @@ public class BulletTransform : MonoBehaviour
 
 	
 	void Update () {
-        //transform.position = Vector3.MoveTowards(transform.position, _pricelPosition.transform.forward, Time.deltaTime*30f);
-	    transform.position = Vector3.Lerp(transform.position, _pricelPosition.transform.forward, Time.deltaTime * 10f);
+	    transform.position = Vector3.Lerp(transform.position, _pricelPosition.transform.position, Time.deltaTime * 10f);
 	}
 }

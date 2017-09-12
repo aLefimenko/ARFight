@@ -51,21 +51,17 @@ public class ControllerScript : MonoBehaviour {
 	
 	void Update () {
         //gameObject.transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, -Input.gyro.rotationRateUnbiased.z);
-        if (BaseSDK.GetButton(1)&&isReadyToStart==false||Input.GetMouseButtonDown(0)&&isReadyToStart==false)
+        if (BaseSDK.GetButton(1)&&isReadyToStart==false)
         {
             isReadyToStart = true;
             StartGame();
         }
-        if (BaseSDK.GetButton(1)&&isReadyToStart&&isClicked==false||Input.GetMouseButtonDown(0)&&isReadyToStart)
+        if (BaseSDK.GetButton(1)&&isReadyToStart&&isClicked==false)
         {
-            /*Debug.Log("Camera quaternhion: " + Camera.main.transform.rotation.ToString());
-            Debug.Log("Clipse quaternioon: " + BaseSDK.GetQuaternion().ToString());*/
             _pistol.GetComponent<Animation>().Stop();
             _pistol.GetComponent<Animation>().Play("Shoot",PlayMode.StopAll);
-            var bullet = Instantiate(_bullet, _positionBullet.transform.position, Quaternion.identity);
+            var bullet = Instantiate(_bullet, m_firstPersonCamera.transform.position, Quaternion.identity);
             bullet.SetActive(true);
-            //bullet.transform.position = Vector3.MoveTowards(bullet.transform.position,_pricel.transform.forward,Time.deltaTime*0.2f);
-            //bullet.GetComponent<Rigidbody>().AddForce(_pricel.GetComponent<Transform>().transform.position*5000f);
             Destroy(bullet,0.5f);
             RaycastHit hit;
             isClicked = true;
@@ -110,7 +106,6 @@ public class ControllerScript : MonoBehaviour {
             horror.transform.rotation = Quaternion.Euler(0.0f, horror.transform.rotation.eulerAngles.y, horror.transform.rotation.z);
             j++;
         }
-        
         Repeat();
     }
 
@@ -123,7 +118,7 @@ public class ControllerScript : MonoBehaviour {
     {
         cor = StartCoroutine(InstObjects());
         //_bullet.SetActive(true);
-        _pistol.SetActive(true);
+        //_pistol.SetActive(true);
         if (_startButton.activeSelf == true)
         {
             _startButton.SetActive(false);
@@ -147,7 +142,6 @@ public class ControllerScript : MonoBehaviour {
         //_bullet.SetActive(false);
         _pricel.SetActive(false);
         _score.gameObject.SetActive(false);
-        _pistol.SetActive(false);
         _startButton.SetActive(true);
         j = 0;
         StopCoroutine(cor);

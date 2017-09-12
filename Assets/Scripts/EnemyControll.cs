@@ -14,7 +14,7 @@ public class EnemyControll : MonoBehaviour {
 	void Update () {
         if (Vector3.Distance(transform.position, controller.transform.position) < 1f)
         {
-           // gameObject.GetComponent<Animation>().Play("attack1");
+
         }
         else
         {
