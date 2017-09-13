@@ -37,6 +37,8 @@ public class BaseSDK : MonoBehaviour {
             {
                 i = _pluginClass.Call<int>("AutoConnect");
             }
+            Debug.Log(Input.GetAxis("Horizontal") + " - horizontal!");
+            Debug.Log(Input.GetAxis("Vertical") + " - vertical!");
             //_quatReset = GetQuatApparat();
             Debug.Log(_quatReset.ToString());
             /*do

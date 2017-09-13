@@ -54,7 +54,8 @@ public class ControllerScript : MonoBehaviour {
     private bool isResetApp = false;
 
     void Start () {
-        //Input.gyro.enabled = true;
+        Input.gyro.enabled = true;
+        
         m_firstPersonCamera = Camera.main;
        // StartGame();
 	}
@@ -93,14 +94,16 @@ public class ControllerScript : MonoBehaviour {
 	    if (BaseSDK.GetButton(2)&&!isReset)
 	    {
 
-            Debug.Log("StartReset");
+            //Debug.Log("StartReset");
 	        isReset = true;
             /*_rotObj3.enabled = false;
 	        _rotObj2.enabled = false;*/
-            BaseSDK.ResetAxes();
+            Debug.Log(Input.GetAxis("Horizontal") + " - horizontal!");
+            Debug.Log(Input.GetAxis("Vertical") + " - vertical!");
+            Debug.Log(Input.acceleration.x + " -(x) "+ Input.acceleration.y + " -(y) " +  Input.acceleration.z + " -(z)");
             //BaseSDK.ResetQuat();
-            Debug.Log("BaseSDK send request on reset");
-	        StartCoroutine(ResetOrinetaion());
+            //Debug.Log("BaseSDK send request on reset");
+	        //StartCoroutine(ResetOrinetaion());
         }
 	    if (!BaseSDK.GetButton(2)&&isReset)
 	    {
@@ -109,6 +112,7 @@ public class ControllerScript : MonoBehaviour {
 
 	    if (BaseSDK.GetButton(0) && !isResetApp)
 	    {
+
 	        isResetApp = true;
 	        BaseSDK.ResetQuat();
 	        StartCoroutine(ResetOrinetaion());

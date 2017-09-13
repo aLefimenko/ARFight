@@ -24,7 +24,7 @@ MonoBehaviour:
     cameraOffset: 2
     distortionRenderingMode: 1
     distortionRenderingLayer: 31
-    eyewearType: 0
+    eyewearType: 2
     stereoFramework: 0
     seeThroughConfiguration: 0
     viewerName: Generic Cardboard
@@ -35,7 +35,7 @@ MonoBehaviour:
       Name: MYCard
       Manufacturer: Google
       ButtonType: 1
-      ScreenToLensDistance: 0.065
+      ScreenToLensDistance: 0.055
       InterLensDistance: 0.06
       TrayAlignment: 1
       LensCenterToTrayDistance: 0.035
