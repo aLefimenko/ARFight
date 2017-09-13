@@ -46,7 +46,7 @@ public class RotatePr : MonoBehaviour
             return;
              // transform.rotation = Quaternion.Slerp(transform.rotation,
             //  cameraBase * (ConvertRotation(referanceRotation * BaseSDK.GetQuaternion()) * GetRotFix()), lowPassFilterFactor);
-            transform.rotation = Quaternion.Slerp(transform.rotation, referanceRotation* ConvertRotation2(BaseSDK.GetQuaternion()), lowPassFilterFactor);
+            transform.rotation = Quaternion.Slerp(transform.rotation, referanceRotation* BaseSDK.GetQuaternion(), lowPassFilterFactor);
        // GameObject.Find("Text1").GetComponent<UnityEngine.UI.Text>().text = (referanceRotation * BaseSDK.GetQuaternion()).x + " " + (referanceRotation * BaseSDK.GetQuaternion()).y;
        // GameObject.Find("Text2").GetComponent<UnityEngine.UI.Text>().text = transform.rotation.x + " " + transform.rotation.y + " " + transform.rotation.z;
         //GameObject.Find("Text1").GetComponent<UnityEngine.UI.Text>().text = referanceRotation.ToString();
@@ -194,7 +194,7 @@ public class RotatePr : MonoBehaviour
         return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
     private static Quaternion ConvertRotation2(Quaternion q) {
-        return new Quaternion(q.x, -q.y, q.z, 1f);
+        return new Quaternion(q.x, q.y, q.z, q.w);
     }
 
     /// <summary>

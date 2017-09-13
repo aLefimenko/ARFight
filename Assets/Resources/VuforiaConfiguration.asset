@@ -24,7 +24,7 @@ MonoBehaviour:
     cameraOffset: 2
     distortionRenderingMode: 1
     distortionRenderingLayer: 31
-    eyewearType: 2
+    eyewearType: 0
     stereoFramework: 0
     seeThroughConfiguration: 0
     viewerName: Generic Cardboard

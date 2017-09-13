@@ -8,8 +8,12 @@ public class ControllerScript : MonoBehaviour {
     private Coroutine cor;
 
     private Camera m_firstPersonCamera;
-    [SerializeField]
-    RotatePr _rotObj;
+    /*[SerializeField]
+   GyroController1 _rotObj;*/
+
+    [SerializeField] private GyroController1 _rotObj2;
+
+    [SerializeField] private ControllerClipseCube _rotObj3;
 
     [SerializeField] private GameObject _pistol;
 
@@ -41,7 +45,13 @@ public class ControllerScript : MonoBehaviour {
 
     [SerializeField] private GameObject _attackSprite;
 
+    private Quaternion _quatForREset;
+
     private bool isClicked = false;
+
+    private bool isReset = false;
+
+    private bool isResetApp = false;
 
     void Start () {
         //Input.gyro.enabled = true;
@@ -80,12 +90,45 @@ public class ControllerScript : MonoBehaviour {
 	    {
 	        isClicked = false;
 	    }
-	    if (BaseSDK.GetButton(2))
+	    if (BaseSDK.GetButton(2)&&!isReset)
 	    {
-	        BaseSDK.ResetQuat();
-            _rotObj.ResetOrient();//--------------MyEdition------------
-           // _pricel.GetComponent<RotatePr>().ResetOrient();
+
+            Debug.Log("StartReset");
+	        isReset = true;
+            /*_rotObj3.enabled = false;
+	        _rotObj2.enabled = false;*/
+            BaseSDK.ResetAxes();
+            //BaseSDK.ResetQuat();
+            Debug.Log("BaseSDK send request on reset");
+	        StartCoroutine(ResetOrinetaion());
         }
+	    if (!BaseSDK.GetButton(2)&&isReset)
+	    {
+	        isReset = false;
+	    }
+
+	    if (BaseSDK.GetButton(0) && !isResetApp)
+	    {
+	        isResetApp = true;
+	        BaseSDK.ResetQuat();
+	        StartCoroutine(ResetOrinetaion());
+	    }
+	    if (!BaseSDK.GetButton(0) && isResetApp)
+	    {
+	        isResetApp = false;
+	    }
+    }
+
+    IEnumerator ResetOrinetaion()
+    {
+        yield return new WaitForSeconds(3f);
+        /*_rotObj3.enabled = true;
+        _rotObj2.enabled = true;*/
+        //_rotObj.ResetOrient();
+        _rotObj2.ResetOrient();
+        _rotObj3.ResetOrient();
+        Debug.Log(BaseSDK.GetQuatApparat().ToString());
+        Debug.Log("Reset All");
     }
 
     IEnumerator AttackSprite()
