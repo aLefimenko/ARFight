@@ -51,7 +51,13 @@ public class GyroController1 : MonoBehaviour
     public void ResetOrient()
     {
         // referanceRotation =Quaternion.Inverse(ConvertRotation(Camera.main.GetComponentInParent<Transform>().rotation));
-        referanceRotation = Camera.main.GetComponentInParent<Transform>().rotation;
+        if (Input.acceleration.y<=0){
+            referanceRotation = Camera.main.GetComponentInParent<Transform>().rotation;
+        }
+        else{
+           referanceRotation =ConvertRotation2(Camera.main.GetComponentInParent<Transform>().rotation);
+        }
+       
         //  AttachGyro();
         // ResetBaseOrientation();
         //  RecalculateReferenceRotation();
@@ -198,14 +204,18 @@ public class GyroController1 : MonoBehaviour
 	{
 		return new Quaternion(q.x, q.y, q.z, q.w);	
 	}
-	
-	/// <summary>
-	/// Gets the rot fix for different orientations.
-	/// </summary>
-	/// <returns>
-	/// The rot fix.
-	/// </returns>
-	private Quaternion GetRotFix()
+
+    private static Quaternion ConvertRotation2(Quaternion q)
+    {
+        return new Quaternion(-q.x, -q.y, q.z, q.w);
+    }
+    /// <summary>
+    /// Gets the rot fix for different orientations.
+    /// </summary>
+    /// <returns>
+    /// The rot fix.
+    /// </returns>
+    private Quaternion GetRotFix()
 	{
 #if UNITY_3_5
 		if (Screen.orientation == ScreenOrientation.Portrait)

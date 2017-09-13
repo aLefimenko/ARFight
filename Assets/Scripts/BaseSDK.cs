@@ -26,6 +26,10 @@ public class BaseSDK : MonoBehaviour {
 
     private static int i = 0;
 
+    private static int k = 1;
+
+    
+
     void Awake()
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -76,15 +80,23 @@ public class BaseSDK : MonoBehaviour {
 
     public static void ResetQuat()
     {
-        
+        if (Input.acceleration.y <= 0f)
+        {
+            k = -1;
+        }
+        else
+        {
+            k = 1;
+        }
         _pluginClass.Call("ResetQuat");
+
     }
 
     public static Quaternion GetQuaternion()
     {
        // GameObject.Find("Text1").GetComponent<UnityEngine.UI.Text>().text = coordinatsQuater[0].ToString() + " " + coordinatsQuater[1].ToString() + " " + coordinatsQuater[2].ToString() + " ";
         //return new Quaternion(coordinatsQuater[2],coordinatsQuater[3],coordinatsQuater[1],coordinatsQuater[0]);
-        return new Quaternion(-coordinatsQuater[2], -coordinatsQuater[3], coordinatsQuater[1], coordinatsQuater[0]);
+        return new Quaternion(k*coordinatsQuater[2], k*coordinatsQuater[3], coordinatsQuater[1], coordinatsQuater[0]);
         // GameObject.Find("Text1").GetComponent<UnityEngine.UI.Text>().text = new Quaternion(coordinatsQuater[1], coordinatsQuater[3], coordinatsQuater[2], coordinatsQuater[0]).ToString();
         //return new Quaternion(coordinatsQuater[3], coordinatsQuater[1], coordinatsQuater[2], coordinatsQuater[0]);
         // return new Quaternion(coordinatsQuater[2], coordinatsQuater[1], coordinatsQuater[3], coordinatsQuater[0]);
