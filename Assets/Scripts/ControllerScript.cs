@@ -91,13 +91,13 @@ public class ControllerScript : MonoBehaviour {
 	    {
 	        isClicked = false;
 	    }
-	    if (BaseSDK.GetButton(2)&&!isReset)
+	    /*if (BaseSDK.GetButton(2)&&!isReset)
 	    {
 
             //Debug.Log("StartReset");
 	        isReset = true;
-            /*_rotObj3.enabled = false;
-	        _rotObj2.enabled = false;*/
+            _rotObj3.enabled = false;
+	        _rotObj2.enabled = false;
             Debug.Log(Input.GetAxis("Horizontal") + " - horizontal!");
             Debug.Log(Input.GetAxis("Vertical") + " - vertical!");
             Debug.Log(Input.acceleration.x + " -(x) "+ Input.acceleration.y + " -(y) " +  Input.acceleration.z + " -(z)");
@@ -108,16 +108,16 @@ public class ControllerScript : MonoBehaviour {
 	    if (!BaseSDK.GetButton(2)&&isReset)
 	    {
 	        isReset = false;
-	    }
+	    }*/
 
-	    if (BaseSDK.GetButton(0) && !isResetApp)
+	    if (BaseSDK.GetButton(2) && !isResetApp)
 	    {
 
 	        isResetApp = true;
 	        BaseSDK.ResetQuat();
 	        StartCoroutine(ResetOrinetaion());
 	    }
-	    if (!BaseSDK.GetButton(0) && isResetApp)
+	    if (!BaseSDK.GetButton(2) && isResetApp)
 	    {
 	        isResetApp = false;
 	    }
@@ -130,7 +130,7 @@ public class ControllerScript : MonoBehaviour {
         _rotObj2.enabled = true;*/
         //_rotObj.ResetOrient();
         _rotObj2.ResetOrient();
-        _rotObj3.ResetOrient();
+        //_rotObj3.ResetOrient();
         Debug.Log(BaseSDK.GetQuatApparat().ToString());
         Debug.Log("Reset All");
     }

@@ -28,8 +28,6 @@ public class BaseSDK : MonoBehaviour {
 
     private static int k = 1;
 
-    
-
     void Awake()
     {
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -37,14 +35,7 @@ public class BaseSDK : MonoBehaviour {
             _activeClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             _activeContext = _activeClass.GetStatic<AndroidJavaObject>("currentActivity");
             _pluginClass = new AndroidJavaObject("rclip.lib.RClip");
-            while (i != 1)
-            {
-                i = _pluginClass.Call<int>("AutoConnect");
-            }
-            Debug.Log(Input.GetAxis("Horizontal") + " - horizontal!");
-            Debug.Log(Input.GetAxis("Vertical") + " - vertical!");
-            //_quatReset = GetQuatApparat();
-            Debug.Log(_quatReset.ToString());
+            StartCoroutine(ConnectToClipse());
             /*do
             {
                 i = _pluginClass.Call<int>("AutoConnect");
@@ -54,7 +45,6 @@ public class BaseSDK : MonoBehaviour {
                 Application.Quit();
             }*/
         }
-        //_controller = GameObject.FindGameObjectWithTag("control");
     }
 	
 	void Update () {
@@ -65,6 +55,21 @@ public class BaseSDK : MonoBehaviour {
             coordinatsQuater = _pluginClass.Call<float[]>("GetQuat");
             //coordinatsQuater = _pluginClass.Call<float[]>("GetChangedAxes");
         }
+    }
+
+    IEnumerator ConnectToClipse()
+    {
+        yield return new WaitForSeconds(0.3f);
+        i = _pluginClass.Call<int>("AutoConnect");
+        if (i != 1)
+        {
+            Reconnect();
+        }
+    }
+
+    private void Reconnect()
+    {
+        StartCoroutine(ConnectToClipse());
     }
 
     public static float[] GetAxel()
@@ -89,7 +94,6 @@ public class BaseSDK : MonoBehaviour {
             k = 1;
         }
         _pluginClass.Call("ResetQuat");
-
     }
 
     public static Quaternion GetQuaternion()
