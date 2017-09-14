@@ -110,25 +110,15 @@ public class RotatePr : MonoBehaviour
     /// </summary>
     /// 
     public void ResetOrient() {
-       // referanceRotation =Quaternion.Inverse(ConvertRotation(Camera.main.GetComponentInParent<Transform>().rotation));
         referanceRotation = Camera.main.GetComponentInParent<Transform>().rotation;
-        //  AttachGyro();
-        // ResetBaseOrientation();
-        //  RecalculateReferenceRotation();
     }
 
     private void AttachGyro()
     {
         gyroEnabled = true;
-      //  ResetBaseOrientation();
-     //   UpdateCalibration(true);
-      //  UpdateCameraBaseRotation(true);
-       // RecalculateReferenceRotation();
     }
 
-    /// <summary>
-    /// Detaches gyro controller from the transform
-    /// </summary>
+
     private void DetachGyro()
     {
         gyroEnabled = false;
@@ -138,9 +128,6 @@ public class RotatePr : MonoBehaviour
 
     #region [Private methods]
 
-    /// <summary>
-    /// Update the gyro calibration.
-    /// </summary>
     private void UpdateCalibration(bool onlyHorizontal)
     {
         if (onlyHorizontal)

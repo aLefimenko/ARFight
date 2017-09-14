@@ -24,11 +24,9 @@ public class BaseSDK : MonoBehaviour {
 
     [SerializeField] private static GameObject _controller;
 
-
     private static int i = 0;
 
     private static int k = 1;
-
 
 
     void Awake()
@@ -48,9 +46,7 @@ public class BaseSDK : MonoBehaviour {
         if (i == 1)
         {
             coordinats = _pluginClass.Call<float[]>("GetAxel");
-            //coordinatsQuater = _pluginClass.Call<float[]>("GetDevQuat");
             coordinatsQuater = _pluginClass.Call<float[]>("GetQuat");
-            //coordinatsQuater = _pluginClass.Call<float[]>("GetChangedAxes");
         }
     }
 
@@ -95,12 +91,7 @@ public class BaseSDK : MonoBehaviour {
 
     public static Quaternion GetQuaternion()
     {
-       // GameObject.Find("Text1").GetComponent<UnityEngine.UI.Text>().text = coordinatsQuater[0].ToString() + " " + coordinatsQuater[1].ToString() + " " + coordinatsQuater[2].ToString() + " ";
-        //return new Quaternion(coordinatsQuater[2],coordinatsQuater[3],coordinatsQuater[1],coordinatsQuater[0]);
         return new Quaternion(k*coordinatsQuater[2], k*coordinatsQuater[3], coordinatsQuater[1], coordinatsQuater[0]);
-        // GameObject.Find("Text1").GetComponent<UnityEngine.UI.Text>().text = new Quaternion(coordinatsQuater[1], coordinatsQuater[3], coordinatsQuater[2], coordinatsQuater[0]).ToString();
-        //return new Quaternion(coordinatsQuater[3], coordinatsQuater[1], coordinatsQuater[2], coordinatsQuater[0]);
-        // return new Quaternion(coordinatsQuater[2], coordinatsQuater[1], coordinatsQuater[3], coordinatsQuater[0]);
     }
 
     public static bool GetButton(int _i)
@@ -115,10 +106,6 @@ public class BaseSDK : MonoBehaviour {
         }
     }
 
-    /*public static bool GetButtonMenu()
-    {
-
-    }*/
 
     public static void Vibro()
     {
@@ -127,7 +114,6 @@ public class BaseSDK : MonoBehaviour {
 
     public static void ResetAxes()
     {
-        //_quatReset = new Quaternion(coordinats[1],coordinats[2],coordinats[3],coordinats[0]);
         _pluginClass.Call("ResetDevice");
     }
 
