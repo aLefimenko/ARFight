@@ -5381,7 +5381,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PUSH THE BIG BUTTON FOR CALIBRATE CLIPSE!
+  m_Text: PUSH THE SMALL BUTTON FOR CALIBRATE CLIPSE!
 --- !u!222 &1287004238
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6147,7 +6147,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: bf30d577eead1ef40bcf2b404289daf4, type: 2}
       propertyPath: near clip plane
-      value: 0.01
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: bf30d577eead1ef40bcf2b404289daf4, type: 2}
       propertyPath: m_NormalizedViewPortRect.width
