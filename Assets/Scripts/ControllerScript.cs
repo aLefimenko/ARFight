@@ -63,13 +63,13 @@ public class ControllerScript : MonoBehaviour {
 	
 	void Update () {
 
-        if (BaseSDK.GetButton(1)&&isReadyToStart==false&&isReady)
+        if ((BaseSDK.GetButton(1) || BaseSDK.GetButton(2)) &&isReadyToStart==false&&isReady)
         {
             isReadyToStart = true;
             StartGame();
         }
 
-        if (BaseSDK.GetButton(1)&&isReadyToStart&&isClicked==false||Input.GetMouseButtonDown(0))
+        if ((BaseSDK.GetButton(1) || BaseSDK.GetButton(2)) && isReadyToStart&&isClicked==false||Input.GetMouseButtonDown(0))
         {
             var bullet = Instantiate(_bullet, m_firstPersonCamera.transform.position, Quaternion.identity);
             bullet.SetActive(true);
@@ -89,12 +89,12 @@ public class ControllerScript : MonoBehaviour {
             }
         }
 
-	    if (!BaseSDK.GetButton(1))
+	    if (!BaseSDK.GetButton(1) || !BaseSDK.GetButton(2))
 	    {
 	        isClicked = false;
 	    }
 
-	    if (BaseSDK.GetButton(2) && !isResetApp)
+	    if (BaseSDK.GetButton(0) && !isResetApp)
 	    {
             BaseSDK.ResetQuat();
             _prefabConnectToClipse.SetActive(true);
@@ -103,7 +103,7 @@ public class ControllerScript : MonoBehaviour {
 	        StartCoroutine(ResetOrinetaion());
 	    }
 
-	    if (!BaseSDK.GetButton(2) && isResetApp)
+	    if (!BaseSDK.GetButton(0) && isResetApp)
 	    {
 	        isResetApp = false;
 	    }
