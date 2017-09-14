@@ -35,7 +35,7 @@ MonoBehaviour:
       Name: MYCard
       Manufacturer: Google
       ButtonType: 1
-      ScreenToLensDistance: 0.055
+      ScreenToLensDistance: 0.05
       InterLensDistance: 0.06
       TrayAlignment: 1
       LensCenterToTrayDistance: 0.035
