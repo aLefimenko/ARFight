@@ -24,26 +24,23 @@ public class BaseSDK : MonoBehaviour {
 
     [SerializeField] private static GameObject _controller;
 
+
     private static int i = 0;
 
     private static int k = 1;
 
+
+
     void Awake()
     {
+
         if (SystemInfo.deviceType == DeviceType.Handheld)
         {
             _activeClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             _activeContext = _activeClass.GetStatic<AndroidJavaObject>("currentActivity");
             _pluginClass = new AndroidJavaObject("rclip.lib.RClip");
+            
             StartCoroutine(ConnectToClipse());
-            /*do
-            {
-                i = _pluginClass.Call<int>("AutoConnect");
-            } while (i != 1);
-            if (_pluginClass == null)
-            {
-                Application.Quit();
-            }*/
         }
     }
 	

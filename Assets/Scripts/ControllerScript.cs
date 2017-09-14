@@ -8,14 +8,10 @@ public class ControllerScript : MonoBehaviour {
     private Coroutine cor;
 
     private Camera m_firstPersonCamera;
-    /*[SerializeField]
-   GyroController1 _rotObj;*/
 
     [SerializeField] private GyroController1 _rotObj2;
 
     [SerializeField] private ControllerClipseCube _rotObj3;
-
-    [SerializeField] private GameObject _pistol;
 
     [SerializeField] private GameObject _prefabObject;
 
@@ -23,7 +19,7 @@ public class ControllerScript : MonoBehaviour {
 
     [SerializeField] private GameObject _startButton;
 
-    [SerializeField] private GameObject _restartbutton;
+    [SerializeField] private GameObject _calibratebutton;
 
     private float _life = 1f;
 
@@ -45,6 +41,10 @@ public class ControllerScript : MonoBehaviour {
 
     [SerializeField] private GameObject _attackSprite;
 
+    [SerializeField] private GameObject _prefabParticleDie;
+
+    [SerializeField] private GameObject _prefabConnectToClipse;
+
     private Quaternion _quatForREset;
 
     private bool isClicked = false;
@@ -53,24 +53,24 @@ public class ControllerScript : MonoBehaviour {
 
     private bool isResetApp = false;
 
+    private bool isReady = false;
+
     void Start () {
         Input.gyro.enabled = true;
-        
         m_firstPersonCamera = Camera.main;
-       // StartGame();
+        _calibratebutton.SetActive(true);
 	}
 	
 	void Update () {
-        //gameObject.transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, -Input.gyro.rotationRateUnbiased.z);
-        if (BaseSDK.GetButton(1)&&isReadyToStart==false)
+
+        if (BaseSDK.GetButton(1)&&isReadyToStart==false&&isReady)
         {
             isReadyToStart = true;
             StartGame();
         }
-        if (BaseSDK.GetButton(1)&&isReadyToStart&&isClicked==false)
+
+        if (BaseSDK.GetButton(1)&&isReadyToStart&&isClicked==false||Input.GetMouseButtonDown(0))
         {
-            _pistol.GetComponent<Animation>().Stop();
-            _pistol.GetComponent<Animation>().Play("Shoot",PlayMode.StopAll);
             var bullet = Instantiate(_bullet, m_firstPersonCamera.transform.position, Quaternion.identity);
             bullet.SetActive(true);
             Destroy(bullet,0.5f);
@@ -81,42 +81,28 @@ public class ControllerScript : MonoBehaviour {
                 EnemyControll _enemy = hit.transform.GetComponent<EnemyControll>();
                 if (_enemy != null)
                 {
-                    Destroy(_enemy.gameObject,0.5f);
+                    Destroy(Instantiate(_prefabParticleDie,_enemy.gameObject.transform.position,Quaternion.identity),1f);
+                    Destroy(_enemy.gameObject);
                     j--;
                     _score.text = (int.Parse(_score.text) + 1).ToString();
                 }
             }
         }
+
 	    if (!BaseSDK.GetButton(1))
 	    {
 	        isClicked = false;
 	    }
-	    /*if (BaseSDK.GetButton(2)&&!isReset)
-	    {
-
-            //Debug.Log("StartReset");
-	        isReset = true;
-            _rotObj3.enabled = false;
-	        _rotObj2.enabled = false;
-            Debug.Log(Input.GetAxis("Horizontal") + " - horizontal!");
-            Debug.Log(Input.GetAxis("Vertical") + " - vertical!");
-            Debug.Log(Input.acceleration.x + " -(x) "+ Input.acceleration.y + " -(y) " +  Input.acceleration.z + " -(z)");
-            //BaseSDK.ResetQuat();
-            //Debug.Log("BaseSDK send request on reset");
-	        //StartCoroutine(ResetOrinetaion());
-        }
-	    if (!BaseSDK.GetButton(2)&&isReset)
-	    {
-	        isReset = false;
-	    }*/
 
 	    if (BaseSDK.GetButton(2) && !isResetApp)
 	    {
-
+            BaseSDK.ResetQuat();
+            _prefabConnectToClipse.SetActive(true);
 	        isResetApp = true;
-	        BaseSDK.ResetQuat();
+            _calibratebutton.SetActive(false);
 	        StartCoroutine(ResetOrinetaion());
 	    }
+
 	    if (!BaseSDK.GetButton(2) && isResetApp)
 	    {
 	        isResetApp = false;
@@ -125,14 +111,12 @@ public class ControllerScript : MonoBehaviour {
 
     IEnumerator ResetOrinetaion()
     {
-        yield return new WaitForSeconds(3f);
-        /*_rotObj3.enabled = true;
-        _rotObj2.enabled = true;*/
-        //_rotObj.ResetOrient();
+        yield return new WaitForSeconds(4f);
         _rotObj2.ResetOrient();
-        //_rotObj3.ResetOrient();
-        Debug.Log(BaseSDK.GetQuatApparat().ToString());
-        Debug.Log("Reset All");
+        _prefabConnectToClipse.SetActive(false);
+        _startButton.SetActive(true);
+        isReady = true;
+       
     }
 
     IEnumerator AttackSprite()
@@ -145,7 +129,6 @@ public class ControllerScript : MonoBehaviour {
     IEnumerator InstObjects()
     {
         yield return new WaitForSeconds(Random.Range(1.5f, 3f));
-        // Vector3 randpos = new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
         if (j < 7)
         {
             var horror = Instantiate(_prefabObject, _positionForInst.transform.position, Quaternion.identity);
@@ -164,16 +147,13 @@ public class ControllerScript : MonoBehaviour {
     public void StartGame()
     {
         cor = StartCoroutine(InstObjects());
-        //_bullet.SetActive(true);
-        //_pistol.SetActive(true);
-        if (_startButton.activeSelf == true)
+        if (_startButton.activeSelf)
         {
             _startButton.SetActive(false);
         }
         _lifefill.gameObject.SetActive(true);
         _score.gameObject.SetActive(true);
         _score.text = "0";
-        _pricel.SetActive(true);
         _life = 1f;
         _lifefill.fillAmount = 1f;
     }
@@ -186,8 +166,6 @@ public class ControllerScript : MonoBehaviour {
         {
             Destroy(go);
         }
-        //_bullet.SetActive(false);
-        _pricel.SetActive(false);
         _score.gameObject.SetActive(false);
         _startButton.SetActive(true);
         j = 0;
@@ -206,6 +184,5 @@ public class ControllerScript : MonoBehaviour {
         {
             StopGame();
         }
-        
     }
 }
